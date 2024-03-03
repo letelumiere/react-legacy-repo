@@ -1,15 +1,15 @@
 import React, {useContext} from 'react';
 import {UserContext} from './ComponentA.jsx';
 
-function ComponenetD(){
+function ComponentD(){
 
     const user = useContext(UserContext);
     return(
         <div className="box">
-            <h1>ComponenetD</h1>
+            <h1>ComponentD</h1>
             <h2>{`Bye ${user}`}</h2>
         </div>
     )
 }
 
-export default ComponenetD;
+export default ComponentD;

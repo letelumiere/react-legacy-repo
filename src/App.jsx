@@ -1,12 +1,11 @@
 //react Hook = useState, useEffect, useContext, useReducter,useCallback, and more...
 //useState()
-
-import ComponenetA from "./ComponentA";
 import React from "react";
+import ComponentA from "./ComponentA.jsx";
 
 
 function App(){
-  return(<ComponenetA/>);
+  return(<ComponentA />);
 }
 
 export default App;

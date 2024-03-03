@@ -1,13 +1,13 @@
-import ComponenetC from "./ComponentC.jsx";
+import ComponentC from "./ComponentC.jsx";
 
-function ComponenetB(){
+function ComponentB(){
 
     return(
         <div className="box">
             <h1>ComponenetB</h1>
-            <ComponenetC />
+            <ComponentC />
         </div>
     )
 }
 
-export default ComponenetB;
+export default ComponentB;
