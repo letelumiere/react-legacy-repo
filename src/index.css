@@ -1,3 +1,5 @@
+/*
+
 .student{
   font-family: Arial, sans-serif;
   font-size: 2em;
@@ -110,4 +112,179 @@
 .counter-button:hover{
   background-color: hsl(197, 100%, 48%);
 
+}
+
+body{
+  font-family: Arial, sans-serif; 
+}
+
+.color-picker-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+h1{
+  margin: 50px;
+  font-size: 3rem;
+}
+
+.color-display{
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid hsl(0,  0%,  80%);
+  border-radius: 25px;
+  margin-bottom: 25px;
+  transition: 0.25s ease;
+}
+
+.color-display p{
+  color: hsl(0, 0%, 20%);
+  font-size: 2rem;
+  text-align: center;
+}
+
+label{
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+input[type="color"]{
+  width: 75px;
+  height: 50px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 3px solid hsl(0, 0%, 80%);
+}
+
+body{
+  background-color: hsl(0, 0%, 10%);
+}
+
+.to-do-list{
+  font-size: Arial, sans-serif;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.h1{
+  font-size: 4rem;
+  color: white;
+}
+
+button{
+  font-size: 1.7rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5 ease;
+}
+
+.add-button{
+  background-color: hsl(125, 47%, 54%);
+}
+
+.add-button:hover{
+  background-color: hsl(125, 47%, 54%);
+}
+
+.delete-button{
+  background-color: hsl(10, 90%, 50%);
+}
+
+.delete-button:hover{
+  background-color: hsl(10, 90%, 40%);
+}
+
+.move-button{
+  background-color: hsl(207, 90%, 64%);
+}
+
+.move-button:hover{
+  background-color: hsl(207, 90%, 54%);
+}
+
+input[type="text"]{
+  font-size: 1.6rem;
+  padding: 10px;
+  border: 2px solid (0, 0%, 80%, 0.5);
+  border-radius: 5px;
+  color: hsla(0, 0%, 0%, 0.5);
+}
+
+ol{
+  padding: 0;
+}
+
+li{
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 15px;
+  background-color: hsl(0, 0%, 97%);
+  margin-bottom: 10px;
+  border: 3px solid hsla(0, 0%, 85%);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.text{
+  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+}
+
+.delete-button, .move-button{
+  padding : 8px 12px;
+  font-size: 1.4rem;
+  margin-left: 10px;
+}
+
+
+
+body{
+  background-image: url(assets/background.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+
+  //OPTIONAL
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.clock-container{
+  backdrop-filter: blur(5px);
+  width: 100vw;
+  padding: 10px 0;
+}
+
+.clock{
+  color: white;
+  font-size: 6rem;
+  font-weight: bold;
+  font-family: monospace;
+  text-align: center;
+  text-shadow: 3px 3px 5px hsl(0, 0%, 0%, 0.75);
+}
+*/
+
+.box{
+  border: 3px solid;
+  padding: 25px;
+
+  
 }

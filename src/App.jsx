@@ -1,12 +1,23 @@
 //react Hook = useState, useEffect, useContext, useReducter,useCallback, and more...
 //useState()
 
-import Counter from "./Counter.jsx"
+import ComponenetA from "./ComponentA";
+import React from "react";
 
 
 function App(){
+  return(<ComponenetA/>);
+}
 
-  return(< Counter/>);
+export default App;
+
+
+/*
+import DigitalClock from "./DigitalClock.jsx";
+
+function App(){
+
+  return(<DigitalClock />);
 }
 
 
