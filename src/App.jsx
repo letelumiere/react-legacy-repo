@@ -1,11 +1,16 @@
 //react Hook = useState, useEffect, useContext, useReducter,useCallback, and more...
 //useState()
 import React from "react";
-import ComponentA from "./ComponentA.jsx";
-
+import Stopwatch from "./Stopwatch";
 
 function App(){
-  return(<ComponentA />);
+
+  return(<>
+  <Stopwatch/>
+  <Stopwatch/>
+  <Stopwatch/>
+  <Stopwatch/>
+  </>  );
 }
 
 export default App;
