@@ -1,5 +1,5 @@
-const User = require("../models/Chat");
-const userController = require("../controllers/User.controlller");
+const user = require("../models/user");
+const userController = {};
 
 userController.saveUser = async(userName, sid) => {
     //이미 있는 유저 여부 확인

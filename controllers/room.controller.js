@@ -1,12 +1,19 @@
 const Room = require("../models/room");
 const roomController = {};
 
-
 roomController.getAllRooms = async() =>{
     const roomList = await Room.find({});
 
     return roomList;
 };
+
+roomController.createRoom = async(user) => {
+    const room = Room.create(user);
+    console.log(room);
+
+    return room;
+}
+
 
 roomController.joinRoom = async(roomId, user) => {
     const room = await Room.findById(roomId);
@@ -35,4 +42,3 @@ roomController.leaveRoom = async(user) => {
 };
 
 module.exports = roomController;
-

@@ -1,4 +1,4 @@
-const Chat = require("../models/Chat");
+const Chat = require("../models/chat");
 const chatController = {};
 
 chatController.saveChat = async(message, user) => {
@@ -9,11 +9,12 @@ chatController.saveChat = async(message, user) => {
             name: user.name,
         },
     });
-
     await newMessage.save();
+
     return newMessage;
     
 }
+
 
 
 module.exports = chatController;
