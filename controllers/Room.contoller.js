@@ -1,6 +1,7 @@
 const Room = require("../models/room");
 const roomController = {};
 
+
 roomController.getAllRooms = async() =>{
     const roomList = await Room.find({});
 
@@ -34,3 +35,4 @@ roomController.leaveRoom = async(user) => {
 };
 
 module.exports = roomController;
+
