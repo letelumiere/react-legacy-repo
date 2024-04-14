@@ -14,18 +14,6 @@ mongoose
     .catch((error) => console.error("database connection error:", error)); // MongoDB 연결 오류 처리
 
 
-app.get("/create", async(req, res) => {
-    try{
-        const room = await room.create();
-        console.log(room);
-
-        res.send(room);
-    }catch(error){
-        console.error("error while creating rooms:", error);
-        res.status(500).send("error while creating rooms"); // 오류 발생 시 클라이언트에게 500 에러 응답
-    }
-});
-
 
 // "/" 경로에 대한 GET 요청을 처리하는 핸들러
 app.get("/", async (req, res) => {

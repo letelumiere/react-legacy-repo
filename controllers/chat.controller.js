@@ -13,8 +13,10 @@ chatController.saveChat = async(message, user) => {
 
     return newMessage;
     
-}
+};
 
+chatController.removeChat = async(instance, user) => {
 
+};
 
 module.exports = chatController;

@@ -7,14 +7,6 @@ roomController.getAllRooms = async() =>{
     return roomList;
 };
 
-roomController.createRoom = async(user) => {
-    const room = Room.create(user);
-    console.log(room);
-
-    return room;
-}
-
-
 roomController.joinRoom = async(roomId, user) => {
     const room = await Room.findById(roomId);
 
@@ -40,5 +32,14 @@ roomController.leaveRoom = async(user) => {
     room.members.remove(user._id);
     await room.save();
 };
+
+////
+
+roomController.createInstance = async(user) => {
+    const room = await Room.create(user);
+
+    
+}
+
 
 module.exports = roomController;
