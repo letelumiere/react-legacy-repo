@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    name : {String,
+    name : {
         type: String,
         require : [true, "user must type name"],
         unique : true,
@@ -13,10 +13,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    room: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Room",
-    },
+    isWaiting: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 

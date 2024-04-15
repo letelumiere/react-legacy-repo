@@ -33,13 +33,5 @@ roomController.leaveRoom = async(user) => {
     await room.save();
 };
 
-////
-
-roomController.createInstance = async(user) => {
-    const room = await Room.create(user);
-
-    
-}
-
 
 module.exports = roomController;

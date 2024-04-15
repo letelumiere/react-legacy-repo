@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Room = require("./models/room");
+const Instance = require("./models/instance");
 
 require('dotenv').config();
 
@@ -13,9 +14,7 @@ mongoose
     .then(() => console.log("connected to database"))
     .catch((error) => console.error("database connection error:", error)); // MongoDB 연결 오류 처리
 
-
-
-// "/" 경로에 대한 GET 요청을 처리하는 핸들러
+    // "/" 경로에 대한 GET 요청을 처리하는 핸들러
 app.get("/", async (req, res) => {
     try {
         // 여러 개의 room을 한꺼번에 생성하고 데이터베이스에 추가
