@@ -7,6 +7,8 @@ require('dotenv').config();
 
 const cors = require("cors");
 const app = express();
+const router = require("./utils/routes");
+
 app.use(cors());
 
 mongoose
@@ -15,6 +17,12 @@ mongoose
     .catch((error) => console.error("database connection error:", error)); // MongoDB 연결 오류 처리
 
     // "/" 경로에 대한 GET 요청을 처리하는 핸들러
+
+app.use("/", routes);
+
+module.exports = app;
+
+/*
 app.get("/", async (req, res) => {
     try {
         // 여러 개의 room을 한꺼번에 생성하고 데이터베이스에 추가
@@ -39,7 +47,4 @@ app.get("/", async (req, res) => {
         console.error("error while creating rooms:", error);
         res.status(500).send("error while creating rooms"); // 오류 발생 시 클라이언트에게 500 에러 응답
     }
-});
-
-module.exports = app;
-
+*/

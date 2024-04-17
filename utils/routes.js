@@ -5,9 +5,8 @@ const userController = require("../controllers/user.Controller");
 const instanceController = require("../controllers/instance.controller");
 const chatController = require("../controllers/chat.controller");
 
-router.post("/instance/create", instanceController.createInstance);
-router.get("/instance/search", "");
+router.post("/create", instanceController.createInstance);
+router.get("/join", instanceContoller.joinInstance);
+router.get("/test", instanceController.createTest);
 
-router.get("/user/search", "");
-
-module.exports = router;
+module.exports = routes;

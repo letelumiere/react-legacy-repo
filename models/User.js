@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    instanceStatus: {
+        type: String,
+        ref: "Instance",
+    },
     isWaiting: {
         type: Boolean,
         default: false,
