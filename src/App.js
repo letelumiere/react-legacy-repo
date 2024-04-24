@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import socket from "./server";
-import ChatPage from "./pages/chatPage/ChatPage.jsx";
+import MainPage from "./pages/MainPage/MainPage.jsx";
 
 import "./App.css";
 
@@ -12,7 +12,7 @@ function App() {
 return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<ChatPage />} />
+        <Route exact path="/" element={<MainPage />} />
 
       </Routes>
     </BrowserRouter>
