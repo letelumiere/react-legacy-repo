@@ -7,13 +7,32 @@ import InputField from "../../components/InputField/InputField";
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 import "./ChatPageStyle.css";
 
-const ChatPage = ({ user }) => {
+const ChatPage = ( ) => {
     const navigate = useNavigate();
     const {id} = useParams();
+
+    const [user, setUser] = useState(null);
+    const [rooms, setRooms] = useState([]);
     const [messageList, setMessageList] = useState([]);
     const [message, setMessage] = useState("");
-    
-    console.log(id);
+
+    useEffect(() => {
+      socket.on("rooms", (res) => {
+        setRooms(res);
+      });
+      askUserName();
+    }, []);
+  
+    const askUserName = () => {
+      const userName = prompt("당신의 이름을 입력하세요.");
+      console.log("userName = ", userName);
+  
+      socket.emit("login", userName, (res) => {
+        if(res?.ok){
+          setUser(res.data);
+        }
+      });
+    };
 
     useEffect(() => {
       socket.on("message", (res) => {
@@ -62,7 +81,7 @@ const ChatPage = ({ user }) => {
           <div>
             <nav>
               <Button onClick={leaveRoom} className='back-button'>←</Button>
-              <div className='nav-user'>{user.name}</div>
+              <div className='nav-user'>{user && user.name}</div>
             </nav>
             {messageList.length > 0 ? (
               <MessageContainer messageList={messageList} user={user} />
