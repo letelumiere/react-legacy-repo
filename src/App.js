@@ -13,7 +13,6 @@ return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<MainPage />} />
-
       </Routes>
     </BrowserRouter>
   );
