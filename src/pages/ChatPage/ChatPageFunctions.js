@@ -8,13 +8,31 @@ export function askUserName(socket, setUser) {
         }
     });
 }
+// client.js
 
 export function createInstance(socket, userA, userB) {
-    
-};
+    const instanceName = "testInstance";
+
+    socket.emit("createInstance", { userA, userB, instanceName }, (res) => {
+        if (res?.ok) {
+            console.log("Instance created successfully:", res.instance);
+            // 클라이언트에서 필요한 작업 수행
+        } else {
+            console.error("Failed to create instance:", res.error);
+            // 에러 처리 로직 추가
+        }
+    });
+}
+
 
 export function joinInstance(socket, instanceId) {
-
+    socket.emit("joinInstance", instanceId, (res) => {
+        if (res && res.ok) {
+            console.log("Successfully joined the instance", res);
+        } else {
+            console.log("Failed to join the instance", res);
+        }
+    });
 };
 
 export function leaveInstance(socket, user, navigate) {

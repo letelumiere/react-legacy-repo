@@ -6,34 +6,18 @@ import { Button } from "@mui/base/Button";
 import InputField from "../../components/InputField/InputField";
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 
-import { askUserName, sendMessage, leaveRoom, joinRoom } from './MainPageFunctions'; // 수정된 파일을 import
+import { sendMessage, leaveRoom } from './ChatPageFunctions'; // 수정된 파일을 import
 
-const MainPage = () => {
+const ChatPage = ({ user }) => {
     const navigate = useNavigate();
     const { id } = useParams();
-
-    const [user, setUser] = useState(null);
-    const [rooms, setRooms] = useState([]);
     const [messageList, setMessageList] = useState([]);
     const [message, setMessage] = useState("");
-
-    useEffect(() => {
-        askUserName(socket, setUser);
-    }, []);
 
     useEffect(() => {
         // 메시지 수신
         socket.on("message", (res) => {
             setMessageList((prevState) => prevState.concat(res));
-        });
-
-        // 방 참여 요청
-        socket.emit("joinRoom", id, (res) => {
-            if (res && res.ok) {
-                console.log("successfully join", res);
-            } else {
-                console.log("fail to join", res);
-            }
         });
 
         // 컴포넌트 언마운트 시 이벤트 핸들러 정리
@@ -58,7 +42,7 @@ const MainPage = () => {
     );
 }
 
-export default MainPage;
+export default ChatPage;
 
 
 
@@ -71,7 +55,7 @@ const MainPage = ({ user }) => {
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
   
-  const [instance, setInstance] = useState([]);
+  const [, setInstance] = useState([]);
 
   console.log(rooms);
 

@@ -2,24 +2,46 @@ import { useEffect,useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import socket from "./server";
-import MainPage from "./pages/MainPage/MainPage.jsx";
+import RoomListPage from "./pages/RoomListPage/RoomListPage.jsx";
+import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 
 import "./App.css";
 
-function App() {  
+function App() {
+  const [user, setUser] = useState(null);
+  const [rooms, setRooms] = useState([]);
 
+  console.log(rooms);
+
+  useEffect(() => {
+    socket.on("rooms", (res) => {
+      setRooms(res);
+    });
+    askUserName();
+  }, []);
+
+  const askUserName = () => {
+    const userName = prompt("당신의 이름을 입력하세요.");
+    console.log("userName = ", userName);
+
+    socket.emit("login", userName, (res) => {
+      if(res?.ok){
+        setUser(res.data);
+      }
+    });
+  };
 
 return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<MainPage />} />
+        <Route exact path="/" element={<RoomListPage rooms={rooms} />} />
+        <Route exact path="/room/:id" element={<ChatPage user={user} />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-
 
 //    socket.on("message", (message) => {
 //  setMessageList((prevState) => prevState.concat(message));
