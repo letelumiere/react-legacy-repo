@@ -15,7 +15,7 @@ chatController.saveChat = async(message, user) => {
     
 };
 
-chatController.removeChat = async(instance, user) => {
+chatController.removeChat = async(room, user) => {
     
 };
 

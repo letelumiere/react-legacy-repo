@@ -1,13 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Room = require("./models/room");
-const Instance = require("./models/instance");
 
 require('dotenv').config();
 
 const cors = require("cors");
 const app = express();
-const router = require("./utils/routes");
+const routes = require("./utils/routes");
 
 app.use(cors());
 
@@ -18,25 +17,21 @@ mongoose
 
     // "/" 경로에 대한 GET 요청을 처리하는 핸들러
 
-app.use("/", routes);
-
-module.exports = app;
-
-/*
+// "/" 경로에 대한 GET 요청을 처리하는 핸들러
 app.get("/", async (req, res) => {
     try {
         // 여러 개의 room을 한꺼번에 생성하고 데이터베이스에 추가
         const rooms = await Room.insertMany([
             {
-                room: "자바스크립트 단톡방",
+                room: "중앙극장 단톡방",
                 members: [],
             },
             {
-                room: "리액트 단톡방",
+                room: "우미관 단톡방",
                 members: [],
             },
             {
-                room: "NodeJS 단톡방",
+                room: "백병원 단톡방",
                 members: [],
             },
         ]);
@@ -47,4 +42,5 @@ app.get("/", async (req, res) => {
         console.error("error while creating rooms:", error);
         res.status(500).send("error while creating rooms"); // 오류 발생 시 클라이언트에게 500 에러 응답
     }
-*/
+});
+module.exports = app;

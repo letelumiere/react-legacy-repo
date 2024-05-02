@@ -1,12 +1,9 @@
 const express = require("express");
-const router = express.Router();
+const routes = express.Router();
 
-const userController = require("../controllers/user.Controller");
-const instanceController = require("../controllers/instance.controller");
+const userController = require("../controllers/user.controller");
+const roomController = require("../controllers/room.controller");
 const chatController = require("../controllers/chat.controller");
 
-router.post("/create", instanceController.createInstance);
-router.get("/join", instanceContoller.joinInstance);
-router.get("/test", instanceController.createTest);
 
 module.exports = routes;

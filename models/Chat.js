@@ -10,13 +10,12 @@ const chatSchema = new mongoose.Schema(
             },
             name: String
         },
-        instance: {
+        room: {
             type: mongoose.Schema.ObjectId,
-            ref: "Instance",
+            ref: "Room",
         },
     },
     { timestamps : true }
 );
 
-module.exports = mongoose.model("chat", chatSchema);
-
+module.exports = mongoose.model("Chat", chatSchema);

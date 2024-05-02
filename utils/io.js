@@ -1,6 +1,6 @@
 const userController = require("../controllers/user.controller");
-const roomController = require("../controllers/room.controller");
 const chatController = require("../controllers/chat.controller");
+const roomController = require("../controllers/room.controller");
 
 module.exports = function(io){
     io.on("connection", async(socket) => {
@@ -11,12 +11,17 @@ module.exports = function(io){
         socket.on("login", async(userName, callback) => {
             //유저 정보를 저장 
             try{
-                const user = await userController.saveUser(userName, socket.id);
-                callback({ok: true, data: user});
+                const isAlreadyExists = await userController.checkUser(userName);
+
+                if(isAlreadyExists){
+                    throw new Error("userName is already taken");
+                }else{
+                    const user = await userController.saveUser(userName, socket.id);
+                    callback({ok: true, data: user});
+                }
             }catch(error){
                 callback({ok: false, error: error.message});
             }
-            //console.log("backend", userName);
         });
 
         socket.on("sendMessage", async(message, callback) => {
@@ -32,6 +37,67 @@ module.exports = function(io){
             }
         });
 
+
+        socket.on("leaveRoom", async({roomId, userId}, callback) => {
+            try{
+                const user = await userController.checkUser(socket.id);
+                await roomController.leaveRoom(roomId, userId);
+                const leaveMessage = {
+                    chat: `${user.name} left this room`,
+                    user: { id: null, name: "system"},
+                };
+
+                socket.broadcast.to(user.room.toString()).emit("message", leaveMessage);    //socket.broadcast의 경우 io.to()와 달리,나를 제외한 채팅방에 모든 맴버에게 메세지를 보낸다 
+                io.emit("rooms", await roomController.getAllRooms());
+                socket.leave(user.room.toString()); 
+                callback({ok: true});
+            }catch{
+                callback({ok: false, error: error.message});
+            }
+        });
+
+        socket.on("readyStatus", async(uid, callback) => {
+            try{
+                const user = await userController.readyStatus(socket.id);
+
+                if(user.isWaiting === true){
+                    const readyMessage = {
+                        chat: `${user.name} ready to match.`,
+                        user: { id: null, name: "system"},                    
+                    }
+                }else{
+                    const readyMessage = {
+                        chat: `${user.name} cancel to match.`,
+                        user: { id: null, name: "system"},                    
+                    }
+                }
+                callback({ok : true});
+            }catch{
+                callback({ok: false, error: error.message});
+            }
+        });
+    });
+};
+
+
+/*
+
+        socket.on("leaveRoom", async(_, callback)=>{
+            try{
+                const user = await userController.checkUser(socket.id);
+                await roomController.leaveRoom(user);
+                const leaveMessage = {
+                    chat: `${user.name} left this room`,
+                    user: { id: null, name: "system" },
+                };
+                socket.broadcast.to(user.room.toString()).emit("message", leaveMessage);    //socket.broadcast의 경우 io.to()와 달리,나를 제외한 채팅방에 모든 맴버에게 메세지를 보낸다 
+                io.emit("rooms", await roomController.getAllRooms());
+                socket.leave(user.room.toString()); //join 했던 방을 떠남
+                callback({ok: true});
+            }catch(error){
+                callback({ok: false, message: error.message});
+            }
+        });
         socket.on("joinRoom", async(rid, callback) => {
             try{
                 const user = await userController.checkUser(socket.id);    // 유저 정보 들고 오기
@@ -57,21 +123,4 @@ module.exports = function(io){
             console.log("user is disconnected.");
         });
 
-        socket.on("leaveRoom", async(_, callback)=>{
-            try{
-                const user = await userController.checkUser(socket.id);
-                await roomController.leaveRoom(user);
-                const leaveMessage = {
-                    chat: `${user.name} left this room`,
-                    user: { id: null, name: "system" },
-                };
-                socket.broadcast.to(user.room.toString()).emit("message", leaveMessage);    //socket.broadcast의 경우 io.to()와 달리,나를 제외한 채팅방에 모든 맴버에게 메세지를 보낸다 
-                io.emit("rooms", await roomController.getAllRooms());
-                socket.leave(user.room.toString()); //join 했던 방을 떠남
-                callback({ok: true});
-            }catch(error){
-                callback({ok: false, message: error.message});
-            }
-        });
-    });
-};
+*/
