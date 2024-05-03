@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import socket from "../../server";
 import { useNavigate } from "react-router-dom";
-import "./SignupPageStyle.css";
+import "./SignupFormStyle.css";
 import { Checkbox } from "@mui/joy";
 
 
-const SignupPage = () => {
+const SignupForm = () => {
     const [emailRemembered, setEmailRemembered] = useState(false);
     const [emailInput, setEmailInput] = useState('');
     const [inputPassword, setInputPassword] = useState(false);
@@ -56,4 +56,4 @@ const SignupPage = () => {
     );
 };
 
-export default SignupPage;
+export default SignupForm;

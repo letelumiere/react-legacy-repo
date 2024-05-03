@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import socket from "./server";
 import RoomListPage from "./pages/RoomListPage/RoomListPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
+import MainPage from "./pages/MainPage/MainPage.jsx";
 
 import "./App.css";
-import SignupPage from "./pages/SignupPage/SignupPage.jsx";
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -35,7 +36,7 @@ function App() {
 return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<SignupPage />} />
+        <Route exact path="/" element={<MainPage />} />
         <Route exact path="/roomList/:id" element={<RoomListPage rooms={rooms} />} />
         <Route exact path="/room/:id" element={<ChatPage user={user} />} />
       </Routes>
