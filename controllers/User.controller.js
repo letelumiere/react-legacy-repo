@@ -14,16 +14,33 @@ userController.checkUser = async (userName) => {
     return user === userName ? true : false;
 };
 
+userController.login = async({email, password}) => {
+    try{
+        const user = await User.findOne({email : "email", password : "password"});
 
-userController.saveUser = async (userName, sid) => {    
+        if(user){
+            await User.findOneAndUpdate({email : "email"}, {online : true});
+        }
+
+    }catch(error){
+        console.error("login error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+
+
+userController.saveUser = async (userName, email, sid) => {    
     try {
             user = new User({
                 name: userName,
+                email : email,
                 token: sid,
                 online: true,
                 instanceStatus: false,
                 isWaiting: false,
             });
+            
 
         // 이미 있는 유저라면 연결 정보 token 값만 업데이트
         user.token = sid;

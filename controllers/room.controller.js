@@ -33,8 +33,6 @@ roomController.joinRoom = async (userIdA, userIdB) => {
     }
 }
 
-
-
 roomController.leaveRoom = async (roomId, userId) => {
     try {
         const room = await Room.findById(roomId);
