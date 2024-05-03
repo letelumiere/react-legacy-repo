@@ -6,6 +6,7 @@ import RoomListPage from "./pages/RoomListPage/RoomListPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 
 import "./App.css";
+import SignupPage from "./pages/SignupPage/SignupPage.jsx";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,7 +18,7 @@ function App() {
     socket.on("rooms", (res) => {
       setRooms(res);
     });
-    askUserName();
+    //askUserName();
   }, []);
 
   const askUserName = () => {
@@ -34,7 +35,8 @@ function App() {
 return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<RoomListPage rooms={rooms} />} />
+        <Route exact path="/" element={<SignupPage />} />
+        <Route exact path="/roomList/:id" element={<RoomListPage rooms={rooms} />} />
         <Route exact path="/room/:id" element={<ChatPage user={user} />} />
       </Routes>
     </BrowserRouter>
