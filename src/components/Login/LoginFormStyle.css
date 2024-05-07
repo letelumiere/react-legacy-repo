@@ -1,4 +1,4 @@
-.signup-body {
+.login-body {
     height:100vh;
     background-image: url("../../../public/background.png");
     margin-left: auto;
@@ -7,7 +7,7 @@
     position: relative;
 }
 
-.signup-body form{
+.login-body form{
     width: auto;
     background-color: aqua;
     position: inherit;

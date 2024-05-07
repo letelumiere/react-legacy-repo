@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import socket from "../../server";
-import { useNavigate } from "react-router-dom";
 import "./RegisterFormStyle.css";
-import { Checkbox } from "@mui/joy";
 
 const RegisterForm = () => {
     const [emailRemembered, setEmailRemembered] = useState(false);

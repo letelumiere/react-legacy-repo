@@ -10,6 +10,7 @@ const RoomListPage = ({rooms}) => {
     navigate(`/room/${rid}`);
   };
 
+  
   return (
     <div className="room-body">
       <div className="room-nav">채팅 ▼</div>
