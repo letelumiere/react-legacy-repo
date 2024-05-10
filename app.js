@@ -46,10 +46,16 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-    try{
+    try {
+        const responseData = { message: "Request received successfully" };
         console.log("hi");
-    }catch(error){
-
+        // 추가적인 작업 수행
+        
+        res.status(200).json(responseData);// 응답 보내기
+    } catch(error) {
+        console.error("Error:", error);
+        res.status(500).json({error: "Error occurred while processing request"}); // 오류 응답 보내기
+        //그냥 .send로 전송시, html로 통신함. 
     }
 });
 
