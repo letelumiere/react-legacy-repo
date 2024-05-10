@@ -3,15 +3,9 @@ import "./LoginFormStyle.css";
 
 const LoginForm = ({ onSubmit, email, onEmailChange, password, onPasswordChange }) => {
     
-    const handleSubmit = (event) => {   
-        event.preventDefault();
-        // 여기서 로그인 로직을 추가하면 됩니다.
-        onSubmit();
-    };
-
     return (
         <div className="login-body">
-            <form onSubmit={handleSubmit}>
+            <form>
                 <input
                     className="login-email"
                     placeholder="Type in here…"
@@ -26,7 +20,7 @@ const LoginForm = ({ onSubmit, email, onEmailChange, password, onPasswordChange 
                     onChange={onPasswordChange}
                 />
 
-            <button onClick={(e) => onSubmit(e)}>login</button>
+            <button onClick={onSubmit}>login</button>
             </form>
         </div>
     );
