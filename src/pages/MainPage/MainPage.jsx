@@ -47,7 +47,7 @@ const MainPage = () => {
             // JSON 형식으로 파싱
             const data = await response.json();
             console.log(data); // 올바른 JSON 형식의 데이터
-    
+            
             // 이후에 데이터 처리 로직을 추가
         } catch (error) {
             console.error('Error: '+ error.message);
