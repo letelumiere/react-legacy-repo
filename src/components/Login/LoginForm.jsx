@@ -26,7 +26,7 @@ const LoginForm = ({ onSubmit, email, onEmailChange, password, onPasswordChange 
                     onChange={onPasswordChange}
                 />
 
-                <button type="submit">Login</button>
+            <button onClick={(e) => onSubmit(e)}>login</button>
             </form>
         </div>
     );
