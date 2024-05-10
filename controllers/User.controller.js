@@ -28,6 +28,26 @@ userController.login = async({email, password}) => {
     }
 };
 
+userController.withdraw = async() => {
+
+};
+
+userController.register = async({email, password}) => {
+    console.log(email);
+    console.log(password);
+    try {
+        const existingUser = await userController.checkUser(email);
+        console.log(existingUser);
+        if (existingUser) {
+            throw new Error("User already exists");
+        }
+        const newUser = await userController.saveUser(email, password);
+        callback({ ok: true, data: newUser });
+    } catch (error) {
+        callback({ ok: false, error: error.message });
+    }
+
+}
 
 
 userController.saveUser = async (userName, email, sid) => {    

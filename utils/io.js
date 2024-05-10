@@ -1,6 +1,7 @@
 const userController = require("../controllers/user.controller");
 const chatController = require("../controllers/chat.controller");
 const roomController = require("../controllers/room.controller");
+const express = require("express");
 
 module.exports = function(io){
     io.on("connection", async(socket) => {
@@ -22,10 +23,14 @@ module.exports = function(io){
                 callback({ ok: false, error: error.message });
             }
         });
-
+/*
         socket.on("register", async ({ email, password }, callback) => {
+            console.log(email);
+            console.log(password);
+
             try {
                 const existingUser = await userController.checkUser(email);
+                console.log(existingUser);
                 if (existingUser) {
                     throw new Error("User already exists");
                 }
@@ -35,6 +40,7 @@ module.exports = function(io){
                 callback({ ok: false, error: error.message });
             }
         });
+  */      
         socket.on("sendMessage", async(message, callback) => {
             try{
                 const user = await userController.checkUser(socket.id);  //유저 찾기 socket id로

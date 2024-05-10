@@ -7,6 +7,7 @@ require('dotenv').config();
 const cors = require("cors");
 const app = express();
 const routes = require("./utils/routes");
+const userController = require("./controllers/user.controller");
 
 app.use(cors());
 
@@ -43,4 +44,14 @@ app.get("/", async (req, res) => {
         res.status(500).send("error while creating rooms"); // 오류 발생 시 클라이언트에게 500 에러 응답
     }
 });
+
+app.post("/register", async (req, res) => {
+    try{
+        console.log("hi");
+    }catch(error){
+
+    }
+});
+
+
 module.exports = app;
