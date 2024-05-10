@@ -6,7 +6,7 @@ userController.checkUser = async (userName) => {
     let user = "";
 
     try{
-        user = await User.findOne({name : "username"});
+        user = await User.findOne({name : username});
     } catch (error) {
         console.error("Error saving user:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -16,10 +16,11 @@ userController.checkUser = async (userName) => {
 
 userController.login = async({email, password}) => {
     try{
-        const user = await User.findOne({email : "email", password : "password"});
-
+        const user = await User.findOne({email : email, password : password});
         if(user){
-            await User.findOneAndUpdate({email : "email"}, {online : true});
+            await User.findOneAndUpdate({email : email}, {online : true});
+        }else{
+            throw new Error("email is not exists or password invalid!");
         }
 
     }catch(error){
@@ -32,43 +33,34 @@ userController.withdraw = async() => {
 
 };
 
-userController.register = async({email, password}) => {
-    console.log(email);
-    console.log(password);
+userController.register = async ({ email, password }) => {
     try {
         const existingUser = await userController.checkUser(email);
-        console.log(existingUser);
         if (existingUser) {
             throw new Error("User already exists");
         }
         const newUser = await userController.saveUser(email, password);
-        callback({ ok: true, data: newUser });
+        return newUser; // 새로 생성된 사용자 정보 반환
     } catch (error) {
-        callback({ ok: false, error: error.message });
+        throw error; // 에러 발생시 호출된 곳으로 에러 전파
     }
+};
 
-}
 
-
-userController.saveUser = async (userName, email, sid) => {    
+userController.saveUser = async (email, password, sid) => {    
     try {
-            user = new User({
-                name: userName,
+            const user = new User({
+                name: email,
                 email : email,
+                password : password,
                 token: sid,
-                online: true,
+                online: false,
                 instanceStatus: false,
                 isWaiting: false,
             });
             
-
-        // 이미 있는 유저라면 연결 정보 token 값만 업데이트
-        user.token = sid;
-        user.online = true;
-
         await user.save();
         
-        // 저장된 사용자 객체 반환
         return user;
     } catch (error) {
         console.error("Error saving user:", error);
