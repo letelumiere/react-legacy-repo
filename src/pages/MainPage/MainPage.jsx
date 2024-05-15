@@ -13,11 +13,12 @@ const MainPage = () => {
 
     const toggleForm = () => {
         setShowRegisterForm(!showRegisterForm);
+        
     };
 
     const handleLoginFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("onsubmit begin!");
+        console.log("onsubmit begins!");
         
         try {
             const response = await fetch('http://localhost:5001/login', {
