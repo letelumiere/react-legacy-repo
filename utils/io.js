@@ -36,8 +36,9 @@ module.exports = function(io){
                 callback({ok:false, error: error.message});
             }
         });
-
+/*
         socket.on("leaveRoom", async({roomId, userId}, callback) => {
+            console.log(roomId, userId);
             try{
                 const user = await userController.checkUser(socket.id);
                 await roomController.leaveRoom(roomId, userId);
@@ -54,6 +55,7 @@ module.exports = function(io){
                 callback({ok: false, error: error.message});
             }
         });
+        */
         socket.on("disconnect", () => {
             console.log("user is disconnected.");
         });

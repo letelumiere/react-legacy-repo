@@ -6,7 +6,7 @@ userController.checkUser = async (userName) => {
     let user = "";
 
     try{
-        user = await User.findOne({name : username});
+        user = await User.findOne({name : userName});
     } catch (error) {
         console.error("Error saving user:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -19,10 +19,11 @@ userController.login = async({email, password}) => {
         const user = await User.findOne({email : email, password : password});
         if(user){
             await User.findOneAndUpdate({email : email}, {online : true});
+
+            
         }else{
             throw new Error("email is not exists or password invalid!");
         }
-
     }catch(error){
         console.error("login error:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -48,6 +49,8 @@ userController.register = async ({ email, password }) => {
 
 
 userController.saveUser = async (email, password, sid) => {    
+
+    console.log(sid);
     try {
             const user = new User({
                 name: email,
