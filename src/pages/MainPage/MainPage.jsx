@@ -4,7 +4,7 @@ import RegisterForm from "../../components/Register/RegisterForm.jsx";
 import LoginForm from "../../components/Login/LoginForm.jsx";
 import socket from "../../server.js";
 
-
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
     const [showRegisterForm, setShowRegisterForm] = useState(false);
@@ -15,6 +15,8 @@ const MainPage = () => {
         setShowRegisterForm(!showRegisterForm);
         
     };
+
+    const navigate = useNavigate();
 
     const handleLoginFormSubmit = async (event) => {
         event.preventDefault();

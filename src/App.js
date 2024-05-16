@@ -38,7 +38,7 @@ return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<MainPage />} />
-        <Route exact path="/roomList/:id" element={<RoomListPage rooms={rooms} />} />
+        <Route exact path="/roomlist/" element={<RoomListPage rooms={rooms} />} />
         <Route exact path="/room/:id" element={<ChatPage user={user} />} />
       </Routes>
     </BrowserRouter>
