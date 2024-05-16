@@ -21,18 +21,9 @@ function App() {
       setRooms(res);
     });
 
+    
+
   }, []);
-
-  const askUserName = () => {
-    const userName = prompt("당신의 이름을 입력하세요.");
-    console.log("userName = ", userName);
-
-    socket.emit("login", userName, (res) => {
-      if(res?.ok){
-        setUser(res.data);
-      }
-    });
-  };
 
 return (
     <BrowserRouter>
