@@ -2,16 +2,16 @@ const User = require("../models/user");
 const userController = {};
 
 
-userController.checkUser = async (userName) => {
+userController.checkUser = async (userEmail) => {
     let user = "";
 
     try{
-        user = await User.findOne({name : userName});
+        user = await User.findOne({email : userEmail});
     } catch (error) {
         console.error("Error saving user:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-    return user === userName ? true : false;
+    return user === userEmail;
 };
 
 userController.login = async({email, password, sid}) => {
@@ -34,7 +34,6 @@ userController.withdraw = async() => {
 };
 
 userController.register = async ({ email, password, sid }) => {
-    console.log("register parameter ", sid, email, password);   
     try {
         const existingUser = await userController.checkUser(email);
         if (existingUser) {
@@ -49,8 +48,6 @@ userController.register = async ({ email, password, sid }) => {
 
 
 userController.saveUser = async (email, password, sid) => {    
-
-    console.log("sid4user ", sid);
     try {
             const user = new User({
                 name: email,

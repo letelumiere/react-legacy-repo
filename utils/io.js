@@ -38,7 +38,7 @@ module.exports = function(io){
                 callback({ok:false, error: error.message});
             }
         });
-
+/*  // 에러가 있어서 잠시 주석 처리
         socket.on("leaveRoom", async(_, callback) => {
             try{
                 const user = await userController.checkUser(sid);
@@ -57,7 +57,7 @@ module.exports = function(io){
                 callback({ok: false, error: error.message});
             }
         });
-
+*/
         socket.on("disconnect", () => {
             console.log("user is disconnected.");
         });
