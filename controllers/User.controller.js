@@ -14,13 +14,12 @@ userController.checkUser = async (userName) => {
     return user === userName ? true : false;
 };
 
-userController.login = async({email, password}) => {
+userController.login = async({email, password, sid}) => {
     try{
         const user = await User.findOne({email : email, password : password});
         if(user){
-            await User.findOneAndUpdate({email : email}, {online : true});
+            await User.findOneAndUpdate({email : email}, {token : sid, online : true});
 
-            
         }else{
             throw new Error("email is not exists or password invalid!");
         }
@@ -34,13 +33,14 @@ userController.withdraw = async() => {
 
 };
 
-userController.register = async ({ email, password }) => {
+userController.register = async ({ email, password, sid }) => {
+    console.log("register parameter ", sid, email, password);   
     try {
         const existingUser = await userController.checkUser(email);
         if (existingUser) {
             throw new Error("User already exists");
         }
-        const newUser = await userController.saveUser(email, password);
+        const newUser = await userController.saveUser(email, password, sid);
         return newUser; // 새로 생성된 사용자 정보 반환
     } catch (error) {
         throw error; // 에러 발생시 호출된 곳으로 에러 전파
@@ -50,13 +50,13 @@ userController.register = async ({ email, password }) => {
 
 userController.saveUser = async (email, password, sid) => {    
 
-    console.log(sid);
+    console.log("sid4user ", sid);
     try {
             const user = new User({
                 name: email,
                 email : email,
                 password : password,
-                token: sid,
+                token: sid, 
                 online: false,
                 instanceStatus: false,
                 isWaiting: false,

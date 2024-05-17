@@ -5,13 +5,11 @@ const userController = require("../controllers/user.controller");
 const roomController = require("../controllers/room.controller");
 const chatController = require("../controllers/chat.controller");
 
-
-
 router.post("/register", async (req, res) => {
     try {
         console.log(req.body);
-        const {email, password} = req.body;
-        await userController.register({email, password});
+        const {email, password, sid} = req.body;    //sid = socketId
+        await userController.register({email, password, sid});
     
         const responseData = { message: "Request received successfully" };
 
@@ -24,8 +22,8 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try{
-        const {email, password} = req.body;
-        await userController.login({email, password});
+        const {email, password, sid} = req.body;
+        await userController.login({email, password, sid});
 
         const responseData = { message: "Request received successfully" };
         res.status(200).json(responseData);// 응답 보내기
