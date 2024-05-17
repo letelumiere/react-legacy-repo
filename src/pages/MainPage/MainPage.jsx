@@ -10,6 +10,7 @@ const MainPage = () => {
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const sid = socket.id;
 
     const toggleForm = () => {
         setShowRegisterForm(!showRegisterForm);
@@ -28,7 +29,7 @@ const MainPage = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, sid})
             });
     
             // HTTP 응답 코드 확인
@@ -45,7 +46,17 @@ const MainPage = () => {
             // JSON 형식으로 파싱
             const data = await response.json();
             console.log(data); // 올바른 JSON 형식의 데이터
-            navigate("/roomlist");
+
+            //http응답 후 socket 로직 실행
+            socket.emit("login", {email, password, sid}, (res) => {
+                if(res?.ok){
+                    console.log(email, password, sid);
+                }
+
+                navigate("/roomlist");
+            });
+
+
             // 이후에 데이터 처리 로직을 추가
         } catch (error) {
             console.error('Error: '+ error.message);
@@ -63,7 +74,7 @@ const MainPage = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, sid })
             });
     
             // HTTP 응답 코드 확인

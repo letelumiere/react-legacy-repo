@@ -15,15 +15,11 @@ function App() {
   const [rooms, setRooms] = useState([]);
 
   console.log(rooms);
-
   useEffect(() => {
     socket.on("rooms", (res) => {
       setRooms(res);
     });
-
-    
-
-  }, []);
+}, []);
 
 return (
     <BrowserRouter>
