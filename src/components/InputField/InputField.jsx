@@ -2,6 +2,7 @@ import React from 'react'
 import { Input } from "@mui/base/Input";
 import { Button } from "@mui/base/Button";
 import './InputField.css'
+
 const InputField = ({message,setMessage,sendMessage}) => {
 
   return (
@@ -28,4 +29,4 @@ const InputField = ({message,setMessage,sendMessage}) => {
   )
 }
 
-export default InputField
+export default InputField;

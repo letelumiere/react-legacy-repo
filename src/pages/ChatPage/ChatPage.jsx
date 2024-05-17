@@ -6,7 +6,7 @@ import { Button } from "@mui/base/Button";
 import InputField from "../../components/InputField/InputField";
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 
-import { sendMessage, leaveRoom } from './ChatPageFunctions'; // 수정된 파일을 import
+//import { sendMessage, leaveRoom } from './ChatPageFunctions'; // 수정된 파일을 import <= socket.*은 function이 아니므로 수정 필
 
 const ChatPage = ({ user }) => {
     const navigate = useNavigate();
@@ -24,12 +24,33 @@ const ChatPage = ({ user }) => {
         return () => {
             socket.off("message");
         };
+
     }, [id]); // id 값이 변경될 때마다 실행
+
+    const sendMessage = (event) => {
+      event.preventDefault();
+      socket.emit("sendMessage", message, (res) => {
+        if (!res.ok) {
+          console.log("error message", res.error);
+        }
+        setMessage("");
+      });
+    };
+
+    const leaveRoom = () => {
+      socket.emit("leaveRoom", user, (res) => {
+        if(res.ok) {
+          navigate("/");  //다시 채팅방 리스트로.
+        }else{
+          console.log("wtf");
+        }
+      });
+    };
 
     return (
         <div className="App">
             <nav>
-                <Button onClick={() => leaveRoom(socket, user, navigate)} className='back-button'> ← </Button>                 
+                <Button onClick={(leaveRoom)} className='back-button'> ← </Button>                 
                 <div className='nav-user'>{user && user.name}</div>
             </nav>
 
@@ -37,7 +58,7 @@ const ChatPage = ({ user }) => {
             <InputField
                 message={message}
                 setMessage={setMessage}
-                sendMessage={(event) => sendMessage(event, socket, message, setMessage)}/>
+                sendMessage={sendMessage}/>
         </div>
     );
 }

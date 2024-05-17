@@ -19,6 +19,10 @@ function App() {
     socket.on("rooms", (res) => {
       setRooms(res);
     });
+    
+    socket.on("disconnect", () => {
+      console.log("user is disconnected");
+    });
 }, []);
 
 return (
