@@ -48,17 +48,17 @@ const MainPage = () => {
             const data = await response.json();
             console.log("data ", data);
 
+            console.log("data parsed to json");
+
             //http응답 후 socket 로직 실행
-            socket.emit("socketLogin", {email, password, sid}, (res) => {
+            socket.emit("login", {email, password, sid}, (res) => {
                 console.log("socketlogin check = " , sid);
                 if(res?.ok){
-                    console.log("res ok =", res.data());
                     setUser(res.data);
 
-                    console.log("RES.DATA =" , res.data, "USER = ", user);
                     navigate("/roomlist/");
                 }else{
-                    console.log("why an deo", res);
+                    console.log("why an deo");
                 }
             });
 
