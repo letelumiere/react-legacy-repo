@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import socket from "./server";
 
-
 import RoomListPage from "./pages/RoomListPage/RoomListPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import MainPage from "./pages/MainPage/MainPage.jsx";
@@ -13,16 +12,17 @@ import "./App.css";
 function App() {
   const [user, setUser] = useState(null);
   const [rooms, setRooms] = useState([]);
-
-  console.log(rooms);
+  
   useEffect(() => {
     socket.on("rooms", (res) => {
       setRooms(res);
     });
-    
+
+
     socket.on("disconnect", () => {
       console.log("user is disconnected");
     });
+
 }, []);
 
 return (

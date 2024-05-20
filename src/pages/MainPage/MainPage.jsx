@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const MainPage = () => {
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [email, setEmail] = useState('');
+    const [user, setUser] = useState(null);
     const [password, setPassword] = useState('');
     const sid = socket.id;
 
@@ -45,15 +46,20 @@ const MainPage = () => {
     
             // JSON 형식으로 파싱
             const data = await response.json();
-            console.log(data); // 올바른 JSON 형식의 데이터
+            console.log("data ", data);
 
             //http응답 후 socket 로직 실행
-            socket.emit("login", {email, password, sid}, (res) => {
+            socket.emit("socketLogin", {email, password, sid}, (res) => {
+                console.log("socketlogin check = " , sid);
                 if(res?.ok){
-                    console.log(email, password, sid);
-                }
+                    console.log("res ok =", res.data());
+                    setUser(res.data);
 
-                navigate("/roomlist");
+                    console.log("RES.DATA =" , res.data, "USER = ", user);
+                    navigate("/roomlist/");
+                }else{
+                    console.log("why an deo", res);
+                }
             });
 
 
@@ -90,6 +96,7 @@ const MainPage = () => {
     
             // JSON 형식으로 파싱
             const data = await response.json();
+
             console.log(data); // 올바른 JSON 형식의 데이터
             
             // 이후에 데이터 처리 로직을 추가

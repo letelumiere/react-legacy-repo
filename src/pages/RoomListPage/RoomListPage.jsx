@@ -6,6 +6,10 @@ import "./RoomListPageStyle.css";
 const RoomListPage = ({rooms}) => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log('socket connected', socket.connected);
+  },[]);
+
   const moveToChat = (rid) => {
     navigate(`/room/${rid}`);
   };
