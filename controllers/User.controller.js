@@ -3,14 +3,15 @@ const userController = {};
 
 
 userController.checkUser = async (email) => {
-    let user = "";
-    try{
-        user = await User.findOne({email : email});
+    try {
+        const user = await User.findOne({ email: email });
+        // user가 null이면 false 반환, user가 존재하면 true 반환
+        return user !== null;
     } catch (error) {
-        console.error("Error saving user:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("Error checking user:", error);
+        // 오류 발생 시 false 반환 (또는 필요에 따라 다른 방식으로 처리)
+        return false;
     }
-    return user.email === email ? true : false;
 };
 
 userController.login = async({email, password, sid}) => {  // 변경: userEmail -> email
@@ -35,6 +36,7 @@ userController.withdraw = async() => {
 };
 
 userController.register = async ({ email, password, sid }) => {
+    console.log("email from register request = ", email);
     try {
         const existingUser = await userController.checkUser(email);
         if (existingUser) {
