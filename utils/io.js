@@ -10,13 +10,14 @@ module.exports = function(io){
         socket.emit("rooms", await roomController.getAllRooms());
 
         console.log("client is connected", sid);
-
-        socket.on("login", async ({ email, password, sid}, callback) => {
+        
+        socket.on("login", async ({ email, password, sid }, callback) => {
+            console.log("socket login parameters =", email, password, sid);
             try {
                 const loginCheck = await userController.checkUser(email);
-        
+                
                 if (loginCheck) {
-                    const user = await userController.login(email, password, sid);
+                    const user = await userController.login({ email, password, sid });  // 수정: {email, password, sid} 객체 전달
                     callback({ ok: true, data: user });
                 } else {
                     throw new Error("Email has not been found");
@@ -25,6 +26,7 @@ module.exports = function(io){
                 callback({ ok: false, error: error.message });
             }
         });
+        
 
         socket.on("sendMessage", async(message, callback) => {
             try{
@@ -38,7 +40,7 @@ module.exports = function(io){
                 callback({ok:false, error: error.message});
             }
         });
-/*  // 에러가 있어서 잠시 주석 처리
+  // 에러가 있어서 잠시 주석 처리
         socket.on("leaveRoom", async(_, callback) => {
             try{
                 const user = await userController.checkUser(sid);
@@ -53,11 +55,11 @@ module.exports = function(io){
                 socket.leave(user.room.toString()); 
 
                 callback({ok: true});
-            }catch{
+            }catch(error){
                 callback({ok: false, error: error.message});
             }
         });
-*/
+
         socket.on("disconnect", () => {
             console.log("user is disconnected.");
         });

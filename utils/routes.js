@@ -21,18 +21,18 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    try{
+    try {
         const {email, password, sid} = req.body;
+        console.log("router responded =", email, password, sid);
         await userController.login({email, password, sid});
 
         const responseData = { message: "Request received successfully" };
-        res.status(200).json(responseData);// 응답 보내기
-    }catch(error){
+        res.status(200).json(responseData);
+    } catch(error) {
         console.error("Error:", error);
-        res.status(500).json({error: "Error occurred while processing request"}); // 오류 응답 보내기  //그냥 .send로 전송시, html로 통신함. 
+        res.status(500).json({error: "Error occurred while processing request"});
     }
 });
-
 
 
 module.exports = router;

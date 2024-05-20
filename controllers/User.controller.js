@@ -2,32 +2,33 @@ const User = require("../models/user");
 const userController = {};
 
 
-userController.checkUser = async (userEmail) => {
+userController.checkUser = async (email) => {
     let user = "";
-
     try{
-        user = await User.findOne({email : userEmail});
+        user = await User.findOne({email : email});
     } catch (error) {
         console.error("Error saving user:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-    return user === userEmail;
+    return user.email === email ? true : false;
 };
 
-userController.login = async({email, password, sid}) => {
-    try{
-        const user = await User.findOne({email : email, password : password});
-        if(user){
-            await User.findOneAndUpdate({email : email}, {token : sid, online : true});
-
-        }else{
+userController.login = async({email, password, sid}) => {  // 변경: userEmail -> email
+    console.log("login email =" , email);
+    try {
+        const user = await User.findOne({email: email, password: password});
+        if(user) {
+            await User.findOneAndUpdate({email: email}, {token: sid, online: true});
+            return user;  // 성공적으로 로그인한 사용자 정보를 반환
+        } else {
             throw new Error("email is not exists or password invalid!");
         }
-    }catch(error){
+    } catch(error) {
         console.error("login error:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        throw new Error("Internal Server Error");  // 오류를 상위로 던짐
     }
 };
+
 
 userController.withdraw = async() => {
 
