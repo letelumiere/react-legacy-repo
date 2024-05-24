@@ -6,7 +6,6 @@ import { Button } from "@mui/base/Button";
 import InputField from "../../components/InputField/InputField";
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 
-//import { sendMessage, leaveRoom } from './ChatPageFunctions'; // 수정된 파일을 import <= socket.*은 function이 아니므로 수정 필
 
 const ChatPage = ({ user }) => {
     const navigate = useNavigate();
@@ -16,22 +15,27 @@ const ChatPage = ({ user }) => {
 
     useEffect(() => {
       socket.on("message", (res) => {
-        console.log("message",res)
         setMessageList((prevState) => prevState.concat(res));
       });
 
       socket.emit("joinRoom", id, (res)=>{
-        console.log("roomId =", id); 
-        if(res?.ok){
-          console.log("successfully join", res);
-        }else{
+        if(!res?.ok){
           console.log("fail to join", res);
         }
       });
+
+      return () => {
+        socket.off("message");
+      };
     }, [id]);
 
     const sendMessage = (event) => {
       event.preventDefault();
+      
+      if(!message.trim()){
+        return;
+      } 
+
       socket.emit("sendMessage", message, (res) => {
         if (!res.ok) {
           console.log("error message", res.error);
