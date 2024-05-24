@@ -15,18 +15,20 @@ const ChatPage = ({ user }) => {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        // 메시지 수신
-        socket.on("message", (res) => {
-            setMessageList((prevState) => prevState.concat(res));
-        });
+      socket.on("message", (res) => {
+        console.log("message",res)
+        setMessageList((prevState) => prevState.concat(res));
+      });
 
-        // 컴포넌트 언마운트 시 이벤트 핸들러 정리
-        return () => {
-            socket.off("message");
-        };
-
-
-    }, [id]); // id 값이 변경될 때마다 실행
+      socket.emit("joinRoom", id, (res)=>{
+        console.log("roomId =", id); 
+        if(res?.ok){
+          console.log("successfully join", res);
+        }else{
+          console.log("fail to join", res);
+        }
+      });
+    }, [id]);
 
     const sendMessage = (event) => {
       event.preventDefault();
@@ -44,7 +46,7 @@ const ChatPage = ({ user }) => {
         if(res.ok) {
           navigate("/roomlist");  //다시 채팅방 리스트로.
         }else{
-          console.log("wtf");
+          console.log("can not leaveRoom with client. ");
         }
       });
     };

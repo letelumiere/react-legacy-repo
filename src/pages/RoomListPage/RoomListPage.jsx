@@ -34,6 +34,23 @@ const RoomListPage = ({rooms}) => {
             </div>
           ))
         : null}
+      <div className="room-nav">참여 중인 채팅 wip ▼</div>  
+      {rooms.length > 0
+        ? rooms.map((room) => (
+            <div
+              className="room-list"
+              key={room._id}
+              onClick={() => moveToChat(room._id)}
+            >
+              <div className="room-title">
+                <img src="/profile.jpeg" />
+                <p>{room.room}</p>
+              </div>
+              <div className="member-number">{room.members.length}</div>
+            </div>
+          ))
+        : null}
+
     </div>
   );
 };

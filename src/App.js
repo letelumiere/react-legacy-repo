@@ -18,7 +18,6 @@ function App() {
       setRooms(res);
     });
 
-
     socket.on("disconnect", () => {
       console.log("user is disconnected");
     });
