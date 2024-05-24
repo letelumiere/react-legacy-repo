@@ -33,7 +33,7 @@ module.exports = function(io){
             try{
                 const user = await userController.checkSocketUser(sid);  //유저 찾기 socket id로
                 const newMessage = await chatController.saveChat(message, user); //메세지 저장(유저);
-
+                
                 io.emit("message", newMessage); //callback({ok: true, data: newMessage});
                 callback({ok:true});
 
