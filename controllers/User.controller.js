@@ -14,8 +14,20 @@ userController.checkUser = async (email) => {
     }
 };
 
+userController.checkSocketUser = async (sid) => {
+    try {
+        const user = await User.findOne({ token: sid });
+        // user가 null이면 false 반환, user가 존재하면 true 반환
+        console.log("socketUser = " , user);
+        return user;
+    } catch (error) {
+        console.error("Error checking user:", error);
+        // 오류 발생 시 false 반환 (또는 필요에 따라 다른 방식으로 처리)
+        return false;
+    }
+};
+
 userController.login = async({email, password, sid}) => {  // 변경: userEmail -> email
-    console.log("login email =" , email);
     try {
         const user = await User.findOne({email: email, password: password});
         if(user) {

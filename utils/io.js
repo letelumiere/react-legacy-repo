@@ -8,7 +8,7 @@ module.exports = function(io){
         const sid = socket.id;
 
         socket.emit("rooms", await roomController.getAllRooms());
-
+        
         console.log("client is connected", sid);
         
         socket.on("login", async ({ email, password, sid }, callback) => {
@@ -25,12 +25,13 @@ module.exports = function(io){
             } catch (error) {
                 callback({ ok: false, error: error.message });
             }
-        });
+        }); 
         
 
         socket.on("sendMessage", async(message, callback) => {
+
             try{
-                const user = await userController.checkUser(sid);  //유저 찾기 socket id로
+                const user = await userController.checkSocketUser(sid);  //유저 찾기 socket id로
                 const newMessage = await chatController.saveChat(message, user); //메세지 저장(유저);
 
                 io.emit("message", newMessage); //callback({ok: true, data: newMessage});
@@ -40,6 +41,36 @@ module.exports = function(io){
                 callback({ok:false, error: error.message});
             }
         });
+
+        
+        socket.on("joinRoom", async(rid, callback) => {
+            console.log(rid, callback, sid);
+
+            try{
+                const user = await userController.checkSocketUser(sid);    // 유저 정보 들고 오기
+                console.log("check joinRoom user =", user, user.email);
+                await roomController.joinRoom(rid, user);   // 1~2 작업
+                socket.join(user.room.toString());  //3 작업
+
+                const welcomeMessage = {
+                    chat: `${user.name} is joined to this room`,
+                    user: {id: null, name: "system"},
+                };
+
+                io.to(user.room.toString()).emit("message", welcomeMessage); // 4 작업
+                io.emit("rooms", await roomController.getAllRooms()); // 5 작업
+
+                callback({ok:true});
+            }catch(error){
+                callback({ok:false, error: error.message});   
+            }
+        });
+
+        socket.on("disconnect", () => {
+            console.log("user is disconnected.");
+        });
+
+
   // 에러가 있어서 잠시 주석 처리
         socket.on("leaveRoom", async(_, callback) => {
             try{

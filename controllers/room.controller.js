@@ -11,54 +11,39 @@ roomController.getAllRooms = async() => {
     }
 }
 
-roomController.joinRoom = async (userIdA, userIdB) => {
-    try {
-        const roomData = new Room({
-            members: [userIdA, userIdB],
-        });
-        
-        // 인스턴스 저장
-        const savedRoom = await roomData.save();
-
-        if (!savedRoom) {
-            throw new Error("Failed to create room.");
-        }
-
-        console.log('Room created successfully');
-    } catch (error) {
-        console.error('Error joining room:', error);
-        if (next) {
-            next(error);
-        }
+roomController.getJoinedRooms = async(userEmail) => {
+    try{
+        const rooms = await Room.find({members: {email : userEmail}});
+        return rooms;
+    }catch(error){
+        return res.status(500).json({ error: 'failed to get joined rooms'});
     }
 }
 
-roomController.leaveRoom = async (roomId, userId) => {
-    try {
-        const room = await Room.findById(roomId);
-        
-        if (!room) {
-            return res.status(404).json({ error: 'Room not found' });
-        }
+roomController.joinRoom = async(rid, user) => {
+    const room = await Room.findById(rid);
 
-        // 사용자의 상태 변경
-        const updatedUser = await User.findByIdAndUpdate(userId, { isWaiting: false, roomStatus: {}}, { new: true });
-
-        if (!updatedUser) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        // 인스턴스 멤버 수 확인
-        if (room.members.length === 0) {
-            await Room.findByIdAndDelete(roomId);
-            return res.status(200).json({ message: 'Room deleted successfully' });
-        } else {
-            return res.status(200).json({ message: 'User left the room' });
-        }
-    } catch (error) {
-        console.error("Error leaving room:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if(!room){
+        throw new Error("해당 방이 없습니다.");
     }
+
+    if(!room.members.includes(user._id)){
+        room.members.push(user._id);
+        await room.save();
+    }
+
+    user.room = rid;
+    await user.save();
+};
+
+roomController.leaveRoom = async(user) => {
+    const room = await Room.findById(user.room);
+    if(!room){
+        throw new Error("Room not found.");
+    }
+
+    room.members.remove(user._id);
+    await room.save();
 };
 
 
